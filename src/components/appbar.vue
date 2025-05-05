@@ -14,7 +14,7 @@ const prefersDarkMode = ref(false)
 
 // 切换深色/浅色模式
 const toggleTheme = () => {
-    theme.global.name.value = theme.global.current.value.dark ? 'lightTheme' : 'dark'
+    theme.global.name.value = theme.global.current.value.dark ? 'lightTheme' : 'darkTheme'
     isDark.value = !isDark.value
 }
 
@@ -31,7 +31,7 @@ const setupDarkModeListener = () => {
     const handleChange = (e: MediaQueryListEvent) => {
         prefersDarkMode.value = e.matches
         // 如果用户没有手动切换过主题，则自动应用系统主题
-        theme.global.name.value = e.matches ? 'dark' : 'lightTheme'
+        theme.global.name.value = e.matches ? 'darkTheme' : 'lightTheme'
         isDark.value = e.matches
     }
 
@@ -48,7 +48,7 @@ const setupDarkModeListener = () => {
 onMounted(() => {
     const systemPrefersDark = checkPrefersDarkMode()
     // 设置初始主题为系统首选主题
-    theme.global.name.value = systemPrefersDark ? 'dark' : 'lightTheme'
+    theme.global.name.value = systemPrefersDark ? 'darkTheme' : 'lightTheme'
     isDark.value = systemPrefersDark
 
     // 设置系统主题变化的监听器
@@ -64,7 +64,7 @@ const navLinks = [
 </script>
 
 <template>
-    <v-app-bar flat color="background" class="px-4 gradient-header app-bar-with-border">
+    <v-app-bar flat color="background" class="px-4 gradient-header app-bar-with-border app-bar-blur">
         <v-app-bar-title>
             <span class="font-weight-bold primary--text">LoliNya Network</span>
             <span class="text-subtitle-1 ml-2 text-medium-emphasis">AS114514</span>
@@ -149,5 +149,15 @@ const navLinks = [
 
 :deep(.v-theme--dark) .app-bar-with-border {
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.app-bar-blur {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background-color: rgba(var(--v-theme-background), 0.8) !important;
+}
+
+:deep(.v-theme--dark) .app-bar-blur {
+    background-color: rgba(18, 18, 18, 0.8) !important;
 }
 </style>

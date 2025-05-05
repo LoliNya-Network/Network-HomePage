@@ -47,6 +47,8 @@ const featureCards = [
 
 <template>
     <v-container fluid>
+        <div class="header-background" />
+
         <v-row justify="center" class="header-section pa-4">
             <v-col cols="12" md="10" lg="9" xl="8" class="text-center">
                 <div class="d-flex justify-center mb-4">
@@ -226,7 +228,7 @@ const featureCards = [
         <v-row justify="center" class="my-6">
             <v-col cols="12" md="10" lg="8">
                 <v-card color="primary" class="text-center py-4 px-2 rounded-lg">
-                    <v-card-title class="text-h4 text-white">Contact Us</v-card-title>
+                    <v-card-title class="text-h4 text-white">CONTACT US</v-card-title>
                     <v-card-text>
                         <v-row justify="center" class="mt-2">
                             <v-col cols="12" sm="6" class="d-flex justify-center">
@@ -271,11 +273,31 @@ const featureCards = [
     margin-bottom: 70px;
     padding-top: 40px;
     padding-bottom: 40px;
+    position: relative;
+    z-index: 2;
+}
+
+.header-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+        circle at 0% 0%,
+        rgba(240, 98, 146, 0.15) 0%,
+        rgba(240, 98, 146, 0.07) 15%,
+        rgba(240, 98, 146, 0.03) 30%,
+        transparent 40%
+    );
+    z-index: 0;
+    pointer-events: none;
 }
 
 .logo-image {
     width: 550px;
     height: auto;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
 }
 
 @media (min-width: 960px) {

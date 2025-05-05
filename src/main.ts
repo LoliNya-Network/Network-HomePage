@@ -3,7 +3,7 @@ import '@mdi/font/css/materialdesignicons.css'
 
 import { createApp } from 'vue'
 import { createVuetify } from 'vuetify'
-import { lightTheme } from '@/assets/styles/theme'
+import { lightTheme, darkTheme } from '@/assets/styles/theme'
 
 import App from './App.vue'
 import router from './router'
@@ -12,7 +12,8 @@ const vuetify = createVuetify({
     theme: {
         defaultTheme: 'lightTheme',
         themes: {
-            lightTheme
+            lightTheme,
+            darkTheme
         }
     }
 })
