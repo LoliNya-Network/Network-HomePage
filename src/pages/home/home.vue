@@ -13,9 +13,7 @@ const theme = useTheme()
 
 // 计算当前应显示的logo
 const currentLogo = computed(() => {
-    return theme.global.current.value.dark
-        ? '/logo/logo.svg'
-        : '/logo/logo_dark.svg'
+    return theme.global.current.value.dark ? '/logo/logo.svg' : '/logo/logo_dark.svg'
 })
 
 // 定义各种卡片的内容数据
@@ -82,7 +80,7 @@ const featureCards = [
                         </p>
                         <p class="mt-4">
                             This network
-                            <span class="text-primary font-weight-bold"
+                            <span class="text-secondary font-weight-bold"
                                 >supports IPv6 only</span
                             >, providing professional technical support and services. We
                             welcome peering with other education and research networks to
@@ -276,7 +274,7 @@ const featureCards = [
 }
 
 .logo-image {
-    width: 550px;  
+    width: 550px;
     height: auto;
 }
 

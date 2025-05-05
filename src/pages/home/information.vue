@@ -115,9 +115,7 @@ const ipv6Blocks = ref([
                         <v-icon size="small" color="primary" class="me-1">mdi-lan</v-icon>
                         Network Type
                     </div>
-                    <div class="info-value">
-                        Research & Education Network
-                    </div>
+                    <div class="info-value">Research & Education Network</div>
                 </div>
             </div>
         </v-card-text>

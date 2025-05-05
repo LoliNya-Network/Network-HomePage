@@ -64,7 +64,7 @@ const navLinks = [
 </script>
 
 <template>
-    <v-app-bar flat color="background" class="px-4 app-bar-with-border">
+    <v-app-bar flat color="background" class="px-4 gradient-header app-bar-with-border">
         <v-app-bar-title>
             <span class="font-weight-bold primary--text">LoliNya Network</span>
             <span class="text-subtitle-1 ml-2 text-medium-emphasis">AS114514</span>
@@ -138,6 +138,11 @@ const navLinks = [
 </template>
 
 <style scoped>
+.gradient-header {
+    background: linear-gradient(to right, rgb(var(--v-theme-primary), 0.05), transparent);
+    border-bottom: 1px solid rgb(var(--v-theme-primary), 0.1);
+}
+
 .app-bar-with-border {
     border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* 浅灰色边框 */
 }

@@ -40,7 +40,7 @@ const props = withDefaults(defineProps<Props>(), {
     line-height: 1.6;
     font-size: 1rem;
     letter-spacing: 0.03em;
-    
+
     div {
         width: 100%;
     }
