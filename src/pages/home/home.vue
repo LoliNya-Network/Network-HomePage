@@ -255,7 +255,7 @@ const featureCards = [
             </v-col>
         </v-row>
 
-        <v-footer class="text-center d-block py-4">
+        <v-footer class="text-center d-block py-4 rounded-lg">
             <div class="text-subtitle-2 text-medium-emphasis">
                 © {{ new Date().getFullYear() }} LoliNya Network AS114514
             </div>
