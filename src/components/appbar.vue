@@ -27,14 +27,14 @@ const checkPrefersDarkMode = () => {
 // 监听系统颜色模式变化
 const setupDarkModeListener = () => {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-    
+
     const handleChange = (e: MediaQueryListEvent) => {
         prefersDarkMode.value = e.matches
         // 如果用户没有手动切换过主题，则自动应用系统主题
         theme.global.name.value = e.matches ? 'dark' : 'light'
         isDark.value = e.matches
     }
-    
+
     // 添加事件监听
     if (mediaQuery.addEventListener) {
         mediaQuery.addEventListener('change', handleChange)
@@ -50,7 +50,7 @@ onMounted(() => {
     // 设置初始主题为系统首选主题
     theme.global.name.value = systemPrefersDark ? 'dark' : 'light'
     isDark.value = systemPrefersDark
-    
+
     // 设置系统主题变化的监听器
     setupDarkModeListener()
 })
@@ -70,7 +70,7 @@ const navLinks = [
             <span class="text-subtitle-1 ml-2 text-medium-emphasis">AS114514</span>
         </v-app-bar-title>
 
-        <v-spacer></v-spacer>
+        <v-spacer />
 
         <!-- 在桌面端显示按钮 -->
         <template v-if="!mobile">
@@ -87,7 +87,12 @@ const navLinks = [
             </v-btn>
 
             <!-- 深色模式切换按钮 -->
-            <v-btn icon @click="toggleTheme" class="ml-2">
+            <v-btn
+                icon
+                @click="toggleTheme"
+                class="ml-2"
+                :aria-label="isDark ? 'Switch to light color mode' : 'Switch to dark color mode'"
+            >
                 <v-icon>{{ isDark ? 'mdi-weather-sunny' : 'mdi-weather-night' }}</v-icon>
             </v-btn>
         </template>
@@ -95,7 +100,12 @@ const navLinks = [
         <!-- 在移动端显示菜单按钮 -->
         <template v-else>
             <!-- 深色模式切换按钮 (移动端) -->
-            <v-btn icon @click="toggleTheme" class="mr-2">
+            <v-btn
+                icon
+                @click="toggleTheme"
+                class="mr-2"
+                :aria-label="isDark ? 'Switch to light color mode' : 'Switch to dark color mode'"
+            >
                 <v-icon>{{ isDark ? 'mdi-weather-sunny' : 'mdi-weather-night' }}</v-icon>
             </v-btn>
 

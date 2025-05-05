@@ -46,6 +46,7 @@ const ipv6Blocks = ref([
                             icon="mdi-chevron-down"
                             @click="showIpv6Blocks = !showIpv6Blocks"
                             :class="{ 'rotate-icon': showIpv6Blocks }"
+                            aria-label="Toggle IPv6 Address Blocks"
                             class="ms-2"
                         ></v-btn>
                     </div>
