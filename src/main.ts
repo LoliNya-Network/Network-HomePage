@@ -1,10 +1,10 @@
 import 'vuetify/styles'
 import '@mdi/font/css/materialdesignicons.css'
 
-import { lightTheme } from '@/assets/styles/theme'
-
 import { createApp } from 'vue'
 import { createVuetify } from 'vuetify'
+import { lightTheme } from '@/assets/styles/theme'
+
 import App from './App.vue'
 import router from './router'
 const app = createApp(App)
