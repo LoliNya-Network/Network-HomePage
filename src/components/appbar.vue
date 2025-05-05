@@ -14,7 +14,7 @@ const prefersDarkMode = ref(false)
 
 // 切换深色/浅色模式
 const toggleTheme = () => {
-    theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
+    theme.global.name.value = theme.global.current.value.dark ? 'lightTheme' : 'dark'
     isDark.value = !isDark.value
 }
 
@@ -31,7 +31,7 @@ const setupDarkModeListener = () => {
     const handleChange = (e: MediaQueryListEvent) => {
         prefersDarkMode.value = e.matches
         // 如果用户没有手动切换过主题，则自动应用系统主题
-        theme.global.name.value = e.matches ? 'dark' : 'light'
+        theme.global.name.value = e.matches ? 'dark' : 'lightTheme'
         isDark.value = e.matches
     }
 
@@ -48,7 +48,7 @@ const setupDarkModeListener = () => {
 onMounted(() => {
     const systemPrefersDark = checkPrefersDarkMode()
     // 设置初始主题为系统首选主题
-    theme.global.name.value = systemPrefersDark ? 'dark' : 'light'
+    theme.global.name.value = systemPrefersDark ? 'dark' : 'lightTheme'
     isDark.value = systemPrefersDark
 
     // 设置系统主题变化的监听器
@@ -91,7 +91,9 @@ const navLinks = [
                 icon
                 @click="toggleTheme"
                 class="ml-2"
-                :aria-label="isDark ? 'Switch to light color mode' : 'Switch to dark color mode'"
+                :aria-label="
+                    isDark ? 'Switch to light color mode' : 'Switch to dark color mode'
+                "
             >
                 <v-icon>{{ isDark ? 'mdi-weather-sunny' : 'mdi-weather-night' }}</v-icon>
             </v-btn>
@@ -104,7 +106,9 @@ const navLinks = [
                 icon
                 @click="toggleTheme"
                 class="mr-2"
-                :aria-label="isDark ? 'Switch to light color mode' : 'Switch to dark color mode'"
+                :aria-label="
+                    isDark ? 'Switch to light color mode' : 'Switch to dark color mode'
+                "
             >
                 <v-icon>{{ isDark ? 'mdi-weather-sunny' : 'mdi-weather-night' }}</v-icon>
             </v-btn>
