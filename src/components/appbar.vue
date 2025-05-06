@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useDisplay } from 'vuetify'
 import { useTheme } from 'vuetify'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 
 defineOptions({
     name: 'AppBarComponent'
@@ -61,13 +61,30 @@ const navLinks = [
     { title: 'Looking Glass', icon: 'mdi-magnify', url: '#' },
     { title: 'BGP Communities', icon: 'mdi-tag-multiple', url: '#/communities' }
 ]
+
+const currentLogo = computed(() => {
+    return theme.global.current.value.dark ? '/logo/logo.svg' : '/logo/logo_dark.svg'
+})
 </script>
 
 <template>
-    <v-app-bar flat color="background" class="px-4 gradient-header app-bar-with-border app-bar-blur">
-        <v-app-bar-title>
-            <span class="font-weight-bold primary--text">LoliNya Network</span>
-            <span class="text-subtitle-1 ml-2 text-medium-emphasis">AS114514</span>
+    <v-app-bar
+        flat
+        color="background"
+        class="px-4 gradient-header app-bar-with-border app-bar-blur"
+    >
+        <v-app-bar-title class="d-flex align-center">
+            <div class="d-flex align-center">
+                <img
+                    :style="{ 'max-width': mobile ? '150px' : '200px' }"
+                    :src="currentLogo"
+                    alt="LoliNya Network Logo"
+                    class="logo-image"
+                />
+                <span class="text-subtitle-1 ml-2 text-medium-emphasis" v-if="!mobile"
+                    >AS114514</span
+                >
+            </div>
         </v-app-bar-title>
 
         <v-spacer />
@@ -159,5 +176,10 @@ const navLinks = [
 
 :deep(.v-theme--dark) .app-bar-blur {
     background-color: rgba(18, 18, 18, 0.8) !important;
+}
+
+.logo-image {
+    height: auto;
+    object-fit: contain;
 }
 </style>
