@@ -71,12 +71,12 @@ const currentLogo = computed(() => {
     <v-app-bar
         flat
         color="background"
-        class="px-4 gradient-header app-bar-with-border app-bar-blur"
+        class="gradient-header app-bar-with-border app-bar-blur"
     >
-        <v-app-bar-title class="d-flex align-center">
+        <v-app-bar-title>
             <div class="d-flex align-center">
                 <img
-                    :style="{ 'max-width': mobile ? '150px' : '200px' }"
+                    :style="{ 'max-width': mobile ? '170px' : '200px' }"
                     :src="currentLogo"
                     alt="LoliNya Network Logo"
                     class="logo-image"
@@ -86,8 +86,6 @@ const currentLogo = computed(() => {
                 >
             </div>
         </v-app-bar-title>
-
-        <v-spacer />
 
         <!-- 在桌面端显示按钮 -->
         <template v-if="!mobile">
