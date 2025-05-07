@@ -123,6 +123,7 @@ const featureCards = [
         <v-spacer />
         <v-row justify="center" class="my-6">
             <v-col cols="12" md="10" lg="8">
+                <v-divider class="mb-6"/>
                 <v-row>
                     <v-col cols="12" md="6">
                         <informationcard />

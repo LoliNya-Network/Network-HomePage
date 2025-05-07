@@ -11,11 +11,26 @@ const { mobile } = useDisplay()
 const theme = useTheme()
 const isDark = ref(false)
 const prefersDarkMode = ref(false)
+const userThemePreference = ref<string | null>(null)
+
+// 从 localStorage 获取用户主题偏好
+const getUserThemePreference = (): string | null => {
+    return localStorage.getItem('themePreference')
+}
+
+// 保存用户主题偏好到 localStorage
+const saveUserThemePreference = (themeName: string) => {
+    localStorage.setItem('themePreference', themeName)
+    userThemePreference.value = themeName
+}
 
 // 切换深色/浅色模式
 const toggleTheme = () => {
-    theme.global.name.value = theme.global.current.value.dark ? 'lightTheme' : 'darkTheme'
+    const newTheme = theme.global.current.value.dark ? 'lightTheme' : 'darkTheme'
+    theme.global.name.value = newTheme
     isDark.value = !isDark.value
+    // 保存用户的主题选择
+    saveUserThemePreference(newTheme)
 }
 
 // 检测系统首选颜色模式
@@ -30,30 +45,35 @@ const setupDarkModeListener = () => {
 
     const handleChange = (e: MediaQueryListEvent) => {
         prefersDarkMode.value = e.matches
-        // 如果用户没有手动切换过主题，则自动应用系统主题
-        theme.global.name.value = e.matches ? 'darkTheme' : 'lightTheme'
+        const newTheme = e.matches ? 'darkTheme' : 'lightTheme'
+        theme.global.name.value = newTheme
         isDark.value = e.matches
     }
 
-    // 添加事件监听
-    if (mediaQuery.addEventListener) {
-        mediaQuery.addEventListener('change', handleChange)
-    } else if (mediaQuery.addListener) {
-        // 兼容旧版浏览器
-        mediaQuery.addListener(handleChange)
-    }
+    mediaQuery.addEventListener('change', handleChange)
 }
 
 // 页面加载时设置初始主题
 onMounted(() => {
-    const systemPrefersDark = checkPrefersDarkMode()
-    // 设置初始主题为系统首选主题
-    theme.global.name.value = systemPrefersDark ? 'darkTheme' : 'lightTheme'
-    isDark.value = systemPrefersDark
+    // 首先检查是否有保存的用户主题偏好
+    const savedTheme = getUserThemePreference()
+    userThemePreference.value = savedTheme
+    
+    if (savedTheme) {
+        // 如果有保存的主题偏好，则应用它
+        theme.global.name.value = savedTheme
+        isDark.value = savedTheme === 'darkTheme'
+    } else {
+        // 如果没有保存的主题偏好，则使用系统首选主题
+        const systemPrefersDark = checkPrefersDarkMode()
+        theme.global.name.value = systemPrefersDark ? 'darkTheme' : 'lightTheme'
+        isDark.value = systemPrefersDark
+    }
 
     // 设置系统主题变化的监听器
     setupDarkModeListener()
 })
+
 // 定义导航链接列表
 const navLinks = [
     { title: 'PeeringDB', icon: 'mdi-database', url: 'https://www.peeringdb.com' },
