@@ -58,7 +58,7 @@ onMounted(() => {
     // 首先检查是否有保存的用户主题偏好
     const savedTheme = getUserThemePreference()
     userThemePreference.value = savedTheme
-    
+
     if (savedTheme) {
         // 如果有保存的主题偏好，则应用它
         theme.global.name.value = savedTheme
@@ -76,10 +76,20 @@ onMounted(() => {
 
 // 定义导航链接列表
 const navLinks = [
-    { title: 'PeeringDB', icon: 'mdi-database', url: 'https://www.peeringdb.com' },
-    { title: 'BGP.Tools', icon: 'mdi-tools', url: 'https://bgp.tools' },
-    { title: 'Looking Glass', icon: 'mdi-magnify', url: '#' },
-    { title: 'BGP Communities', icon: 'mdi-tag-multiple', url: '#/communities' }
+    {
+        title: 'PeeringDB',
+        icon: 'mdi-database',
+        url: 'https://www.peeringdb.com',
+        external: true
+    },
+    { title: 'BGP.Tools', icon: 'mdi-tools', url: 'https://bgp.tools', external: true },
+    { title: 'Looking Glass', icon: 'mdi-magnify', url: '#', external: true },
+    {
+        title: 'BGP Communities',
+        icon: 'mdi-tag-multiple',
+        url: '/communities',
+        external: false
+    }
 ]
 
 const currentLogo = computed(() => {
@@ -109,17 +119,25 @@ const currentLogo = computed(() => {
 
         <!-- 在桌面端显示按钮 -->
         <template v-if="!mobile">
-            <v-btn
-                v-for="(link, index) in navLinks"
-                :key="index"
-                :href="link.url"
-                target="_blank"
-                variant="text"
-                class="mx-1"
-            >
-                <v-icon start>{{ link.icon }}</v-icon>
-                {{ link.title }}
-            </v-btn>
+            <template v-for="(link, index) in navLinks" :key="index">
+                <!-- 外部链接使用普通 href -->
+                <v-btn
+                    v-if="link.external"
+                    :href="link.url"
+                    target="_blank"
+                    variant="text"
+                    class="mx-1"
+                >
+                    <v-icon start>{{ link.icon }}</v-icon>
+                    {{ link.title }}
+                </v-btn>
+
+                <!-- 内部路由使用 router-link -->
+                <v-btn v-else :to="link.url" variant="text" class="mx-1">
+                    <v-icon start>{{ link.icon }}</v-icon>
+                    {{ link.title }}
+                </v-btn>
+            </template>
 
             <!-- 深色模式切换按钮 -->
             <v-btn
@@ -155,17 +173,27 @@ const currentLogo = computed(() => {
                     </v-btn>
                 </template>
                 <v-list>
-                    <v-list-item
-                        v-for="(link, index) in navLinks"
-                        :key="index"
-                        :href="link.url"
-                        target="_blank"
-                    >
-                        <template v-slot:prepend>
-                            <v-icon>{{ link.icon }}</v-icon>
-                        </template>
-                        <v-list-item-title>{{ link.title }}</v-list-item-title>
-                    </v-list-item>
+                    <template v-for="(link, index) in navLinks" :key="index">
+                        <!-- 外部链接 -->
+                        <v-list-item
+                            v-if="link.external"
+                            :href="link.url"
+                            target="_blank"
+                        >
+                            <template v-slot:prepend>
+                                <v-icon>{{ link.icon }}</v-icon>
+                            </template>
+                            <v-list-item-title>{{ link.title }}</v-list-item-title>
+                        </v-list-item>
+
+                        <!-- 内部路由链接 -->
+                        <v-list-item v-else :to="link.url">
+                            <template v-slot:prepend>
+                                <v-icon>{{ link.icon }}</v-icon>
+                            </template>
+                            <v-list-item-title>{{ link.title }}</v-list-item-title>
+                        </v-list-item>
+                    </template>
                 </v-list>
             </v-menu>
         </template>
