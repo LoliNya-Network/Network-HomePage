@@ -2,6 +2,7 @@
 import { useDisplay } from 'vuetify'
 import { useTheme } from 'vuetify'
 import { ref, onMounted, computed } from 'vue'
+import { useRouter } from 'vue-router'
 
 defineOptions({
     name: 'AppBarComponent'
@@ -12,6 +13,11 @@ const theme = useTheme()
 const isDark = ref(false)
 const prefersDarkMode = ref(false)
 const userThemePreference = ref<string | null>(null)
+const router = useRouter()
+
+function goHome() {
+  router.push('/')
+}
 
 // 从 localStorage 获取用户主题偏好
 const getUserThemePreference = (): string | null => {
@@ -82,7 +88,7 @@ const navLinks = [
         url: 'https://www.peeringdb.com',
         external: true
     },
-    { title: 'BGP.Tools', icon: 'mdi-tools', url: 'https://bgp.tools', external: true },
+    { title: 'BGP.Tools', icon: 'mdi-tools', url: 'https://bgp.tools/as/207529', external: true },
     { title: 'Looking Glass', icon: 'mdi-magnify', url: '#', external: true },
     {
         title: 'BGP Communities',
@@ -106,13 +112,14 @@ const currentLogo = computed(() => {
         <v-app-bar-title>
             <div class="d-flex align-center">
                 <img
-                    :style="{ 'max-width': mobile ? '170px' : '200px' }"
+                    :style="{ 'max-width': mobile ? '170px' : '200px', 'cursor': 'pointer' }"
                     :src="currentLogo"
+                    @click="goHome"
                     alt="LoliNya Network Logo"
                     class="logo-image"
                 />
                 <span class="text-subtitle-1 ml-2 text-medium-emphasis" v-if="!mobile"
-                    >AS114514</span
+                    >AS207529</span
                 >
             </div>
         </v-app-bar-title>

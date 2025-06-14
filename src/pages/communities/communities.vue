@@ -5,124 +5,18 @@ defineOptions({
 </script>
 
 <template>
-    <v-container fluid class="pa-0" style="background-color: var(--v-theme-background)">
+    <v-container fluid>
         <div class="header-background" />
-
-        <v-container class="px-4 pt-6">
-            <v-btn
-                color="primary"
-                variant="outlined"
-                prepend-icon="mdi-arrow-left"
-                class="back-button"
-                @click="$router.push('/')"
-            >
-                返回主页
-            </v-btn>
-        </v-container>
 
         <v-row justify="center" class="mt-12 mb-8">
             <v-col cols="12" md="10" lg="8" class="text-center">
                 <h2 class="text-h3 font-weight-medium primary--text">
-                    <v-icon size="x-large" color="primary" class="mr-3">mdi-star</v-icon>
+                    <v-icon color="primary" class="mr-3">mdi-star</v-icon>
                     BGP Communities
                 </h2>
                 <div class="mt-3 text-medium-emphasis">
                     Detailed BGP community policy and routing control information
                 </div>
-            </v-col>
-        </v-row>
-
-        <v-row justify="center" class="mb-12">
-            <v-col cols="12" md="10" lg="8">
-                <v-card elevation="2" class="rounded-lg community-card">
-                    <v-card-title class="text-h5 primary--text pt-5 px-6">
-                        <v-icon color="primary" class="mr-3">mdi-tag-multiple</v-icon>
-                        BGP Communities
-                    </v-card-title>
-                    <v-card-subtitle class="px-6 pb-2 pt-2">
-                        Below is a list of BGP communities supported by our network for
-                        routing policy control
-                    </v-card-subtitle>
-
-                    <v-card-text class="px-4 pt-2">
-                        <v-table class="community-table">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Community Value</th>
-                                    <th>Description</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>No Export to Peers</td>
-                                    <td class="text-primary font-weight-medium">
-                                        888888:1000
-                                    </td>
-                                    <td>
-                                        This prefix will not be announced to any peering
-                                        partners
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Region: Asia</td>
-                                    <td class="text-primary font-weight-medium">
-                                        888888:2001
-                                    </td>
-                                    <td>Marks routes from the Asia region</td>
-                                </tr>
-                                <tr>
-                                    <td>Region: Europe</td>
-                                    <td class="text-primary font-weight-medium">
-                                        888888:2002
-                                    </td>
-                                    <td>Marks routes from the Europe region</td>
-                                </tr>
-                                <tr>
-                                    <td>Region: North America</td>
-                                    <td class="text-primary font-weight-medium">
-                                        888888:2003
-                                    </td>
-                                    <td>Marks routes from the North America region</td>
-                                </tr>
-                                <tr>
-                                    <td>Priority: High</td>
-                                    <td class="text-primary font-weight-medium">
-                                        888888:3001
-                                    </td>
-                                    <td>High priority routes</td>
-                                </tr>
-                                <tr>
-                                    <td>Priority: Medium</td>
-                                    <td class="text-primary font-weight-medium">
-                                        888888:3002
-                                    </td>
-                                    <td>Medium priority routes</td>
-                                </tr>
-                                <tr>
-                                    <td>Priority: Low</td>
-                                    <td class="text-primary font-weight-medium">
-                                        888888:3003
-                                    </td>
-                                    <td>Low priority routes</td>
-                                </tr>
-                            </tbody>
-                        </v-table>
-                    </v-card-text>
-
-                    <v-card-actions class="px-6 pb-4">
-                        <v-spacer />
-                        <v-btn
-                            color="primary"
-                            variant="text"
-                            prepend-icon="mdi-download"
-                            href="#"
-                            class="text-button"
-                        >
-                            Download Complete Community List
-                        </v-btn>
-                    </v-card-actions>
-                </v-card>
             </v-col>
         </v-row>
 
@@ -138,12 +32,24 @@ defineOptions({
                         routing policy control
                     </v-card-subtitle>
 
-                    <!-- 内部Community -->
+                    <!-- Internal Community -->
                     <v-card-title class="text-h6 primary--text pt-4 px-6">
                         <v-icon color="primary" class="mr-3" size="small">mdi-tag</v-icon>
                         Internal Community
                     </v-card-title>
                     <v-card-text class="px-4 pt-2">
+                        <v-card
+                            class="mb-4 px-4 py-2 d-flex align-center"
+                            style="border-left: 6px solid #f06292; background: #fff0f6"
+                            flat
+                        >
+                            <div style="font-family: monospace">
+                                &nbsp;(207529, <999, 0)&nbsp;&nbsp;Community for all my
+                                node<br />
+                                &nbsp;(207529, <999, 1)&nbsp;&nbsp;Community only for this
+                                node<br />
+                            </div>
+                        </v-card>
                         <v-table class="community-table">
                             <thead>
                                 <tr>
@@ -154,25 +60,79 @@ defineOptions({
                             <tbody>
                                 <tr>
                                     <td class="text-primary font-weight-medium">
-                                        (114514, &lt;999, 0)
+                                        (207529, &lt;999, 0)
                                     </td>
                                     <td>Community for all my node</td>
                                 </tr>
                                 <tr>
                                     <td class="text-primary font-weight-medium">
-                                        (114514, &lt;999, 1)
+                                        (207529, &lt;999, 1)
                                     </td>
                                     <td>Community only for this node</td>
                                 </tr>
                                 <tr>
                                     <td class="text-primary font-weight-medium">
-                                        (114514, 101, *)
+                                        (207529, 1, *)
+                                    </td>
+                                    <td>do not send to ibgp</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-primary font-weight-medium">
+                                        (207529, 2, *)
+                                    </td>
+                                    <td>do not send to ebgp</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-primary font-weight-medium">
+                                        (207529, 3, *)
+                                    </td>
+                                    <td>do not send to kernel</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-primary font-weight-medium">
+                                        (207529, 4, *)
+                                    </td>
+                                    <td>send to kernel but mark unreachable</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-primary font-weight-medium">
+                                        (207529, 5, *)
+                                    </td>
+                                    <td>send to kernel but mark blackhole</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-primary font-weight-medium">
+                                        (207529, 101, *)
                                     </td>
                                     <td>allow bgp_local_perf</td>
                                 </tr>
                                 <tr>
                                     <td class="text-primary font-weight-medium">
-                                        (114514, 209, *)
+                                        (207529, 201, *)
+                                    </td>
+                                    <td>transit routes</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-primary font-weight-medium">
+                                        (207529, 202, *)
+                                    </td>
+                                    <td>ixp rs routes</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-primary font-weight-medium">
+                                        (207529, 203, *)
+                                    </td>
+                                    <td>peer routes</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-primary font-weight-medium">
+                                        (207529, 204, *)
+                                    </td>
+                                    <td>customer routes</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-primary font-weight-medium">
+                                        (207529, 209, *)
                                     </td>
                                     <td>ibgp routes</td>
                                 </tr>
@@ -180,7 +140,7 @@ defineOptions({
                         </v-table>
                     </v-card-text>
 
-                    <!-- 控制类 -->
+                    <!-- Control Community -->
                     <v-card-title class="text-h6 primary--text pt-4 px-6">
                         <v-icon color="primary" class="mr-3" size="small"
                             >mdi-filter</v-icon
@@ -188,54 +148,137 @@ defineOptions({
                         Control Community
                     </v-card-title>
                     <v-card-text class="px-4 pt-2">
-                        <v-table class="community-table">
-                            <thead>
-                                <tr>
-                                    <th>Community Value</th>
-                                    <th>Description</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="text-primary font-weight-medium">
-                                        (114514, 1, *)
-                                    </td>
-                                    <td>do not send to ibgp</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-primary font-weight-medium">
-                                        (114514, 2, *)
-                                    </td>
-                                    <td>do not send to ebgp</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-primary font-weight-medium">
-                                        (114514, 3, *)
-                                    </td>
-                                    <td>do not send to kernel</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-primary font-weight-medium">
-                                        (114514, 4, *)
-                                    </td>
-                                    <td>send to kernel but mark unreachable</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-primary font-weight-medium">
-                                        (114514, 5, *)
-                                    </td>
-                                    <td>send to kernel but mark blackhole</td>
-                                </tr>
-                            </tbody>
-                        </v-table>
+                        <v-card
+                            class="mb-4 px-4 py-2 d-flex align-center"
+                            style="border-left: 6px solid #f06292; background: #fff0f6"
+                            flat
+                        >
+                            <div style="font-family: monospace">
+                                <strong>Actions:</strong><br />
+                                &nbsp;* = 0 &nbsp;&nbsp;do not announce to target<br />
+                                &nbsp;* = 1 &nbsp;&nbsp;prepend 1 to target<br />
+                                &nbsp;* = 2 &nbsp;&nbsp;prepend 2 to target<br />
+                                &nbsp;* = 4 &nbsp;&nbsp;prepend 4 to target<br />
+                                &nbsp;* = 8 &nbsp;&nbsp;prepend 8 to target
+                            </div>
+                        </v-card>
+
+                        <div>
+                            <h4 class="font-weight-medium mb-2">
+                                Action target selector:
+                            </h4>
+                            <v-table class="community-table">
+                                <thead>
+                                    <tr>
+                                        <th>Community Value</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-primary font-weight-medium">
+                                            (207529, 1*00, 0)
+                                        </td>
+                                        <td>Do action to everyone</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-primary font-weight-medium">
+                                            (207529, 1*01, asn)
+                                        </td>
+                                        <td>Don't do action to this asn</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-primary font-weight-medium">
+                                            (207529, 1*02, asn)
+                                        </td>
+                                        <td>Do action to this asn</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-primary font-weight-medium">
+                                            (207529, 1*10, 0)
+                                        </td>
+                                        <td>Do action to every region</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-primary font-weight-medium">
+                                            (207529, 1*11, region_code)
+                                        </td>
+                                        <td>Don't do action to this region</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-primary font-weight-medium">
+                                            (207529, 1*12, region_code)
+                                        </td>
+                                        <td>Do action to this region</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-primary font-weight-medium">
+                                            (207529, 1019, 0)
+                                        </td>
+                                        <td>
+                                            Disable (asn, 1010, 0), (asn, 1011,
+                                            local_region) as default value
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-primary font-weight-medium">
+                                            (207529, 1*20, 0)
+                                        </td>
+                                        <td>Do action to every country</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-primary font-weight-medium">
+                                            (207529, 1*21, country_code)
+                                        </td>
+                                        <td>Don't do action to this country</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-primary font-weight-medium">
+                                            (207529, 1*22, country_code)
+                                        </td>
+                                        <td>Do action to this country</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-primary font-weight-medium">
+                                            (207529, 1*30, 1)
+                                        </td>
+                                        <td>Do action to upstreams</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-primary font-weight-medium">
+                                            (207529, 1*30, 2)
+                                        </td>
+                                        <td>Do action to ixp rs</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-primary font-weight-medium">
+                                            (207529, 1*30, 3)
+                                        </td>
+                                        <td>Do action to peers</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-primary font-weight-medium">
+                                            (207529, 1*30, 4)
+                                        </td>
+                                        <td>Do action to downstreams</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-primary font-weight-medium">
+                                            (207529, 1*30, 8)
+                                        </td>
+                                        <td>Do action to route collectors</td>
+                                    </tr>
+                                </tbody>
+                            </v-table>
+                        </div>
                     </v-card-text>
 
-                    <!-- 信息类 -->
+                    <!-- Informational Community -->
                     <v-card-title class="text-h6 primary--text pt-4 px-6">
                         <v-icon color="primary" class="mr-3" size="small"
                             >mdi-information-outline</v-icon
                         >
-                        Information Community
+                        Informational Community
                     </v-card-title>
                     <v-card-text class="px-4 pt-2">
                         <v-table class="community-table">
@@ -248,37 +291,13 @@ defineOptions({
                             <tbody>
                                 <tr>
                                     <td class="text-primary font-weight-medium">
-                                        (114514, 201, *)
-                                    </td>
-                                    <td>transit routes</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-primary font-weight-medium">
-                                        (114514, 202, *)
-                                    </td>
-                                    <td>ixp rs routes</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-primary font-weight-medium">
-                                        (114514, 203, *)
-                                    </td>
-                                    <td>peer routes</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-primary font-weight-medium">
-                                        (114514, 204, *)
-                                    </td>
-                                    <td>customer routes</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-primary font-weight-medium">
-                                        (114514, 10000, region_code)
+                                        (207529, 10000, region_code)
                                     </td>
                                     <td>Received from region</td>
                                 </tr>
                                 <tr>
                                     <td class="text-primary font-weight-medium">
-                                        (114514, 10001, country_code)
+                                        (207529, 10001, country_code)
                                     </td>
                                     <td>Received from country</td>
                                 </tr>
@@ -286,16 +305,113 @@ defineOptions({
                         </v-table>
                     </v-card-text>
 
-                    <v-card-actions class="px-6 pb-4">
+                    <!-- Region Code -->
+                    <v-card-title class="text-h6 primary--text pt-4 px-6">
+                        <v-icon color="primary" class="mr-3" size="small"
+                            >mdi-information-outline</v-icon
+                        >
+                        Region code
+                    </v-card-title>
+                    <v-card-text class="px-4 pt-2">
+                        <v-table class="community-table">
+                            <thead>
+                                <tr>
+                                    <th>Region Code</th>
+                                    <th>Region</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="text-primary font-weight-medium">41</td>
+                                    <td>Europe</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-primary font-weight-medium">42</td>
+                                    <td>North America-East</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-primary font-weight-medium">43</td>
+                                    <td>North America-Central</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-primary font-weight-medium">44</td>
+                                    <td>North America-West</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-primary font-weight-medium">45</td>
+                                    <td>Central America</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-primary font-weight-medium">46</td>
+                                    <td>South America-Central</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-primary font-weight-medium">47</td>
+                                    <td>South America-West</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-primary font-weight-medium">48</td>
+                                    <td>Africa-N (above Sahara)</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-primary font-weight-medium">49</td>
+                                    <td>Africa-S (below Sahara)</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-primary font-weight-medium">50</td>
+                                    <td>Asia-S (IN, PK, BD)</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-primary font-weight-medium">51</td>
+                                    <td>Asia-SE (TH, SG, PH, ID, MY)</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-primary font-weight-medium">52</td>
+                                    <td>Asia-E (JP, KR, TW, HK, CN)</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-primary font-weight-medium">53</td>
+                                    <td>Pacific&Oceania (AU, NZ, FJ)</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-primary font-weight-medium">54</td>
+                                    <td>Antarctica</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-primary font-weight-medium">55</td>
+                                    <td>Asia-N (RU)</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-primary font-weight-medium">56</td>
+                                    <td>Asia-W (IR, TR, UAE)</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-primary font-weight-medium">57</td>
+                                    <td>Central Asia (AF, UZ, KZ)</td>
+                                </tr>
+                            </tbody>
+                        </v-table>
+                    </v-card-text>
+
+                    <!-- Country Code -->
+                    <v-card-title class="text-h6 primary--text pt-4 px-6">
+                        <v-icon color="primary" class="mr-3" size="small"
+                            >mdi-information-outline</v-icon
+                        >
+                        Country code
+                    </v-card-title>
+                    <v-card-text class="px-4 pt-2">
+                        <p>ISO-3166 numeric-3 country code</p>
+                    </v-card-text>
+                    <v-card-actions>
                         <v-spacer />
                         <v-btn
                             color="primary"
                             variant="text"
                             prepend-icon="mdi-download"
-                            href="#"
-                            class="text-button"
+                            href="/assets/communities-list.md"
                         >
-                            Download Complete Community List
+                            Download full community list
                         </v-btn>
                     </v-card-actions>
                 </v-card>
@@ -320,16 +436,6 @@ defineOptions({
     );
     z-index: 0;
     pointer-events: none;
-}
-
-.back-button {
-    position: relative;
-    z-index: 1;
-    transition: all 0.2s ease;
-
-    &:hover {
-        transform: translateX(-4px);
-    }
 }
 
 .community-card {
@@ -369,5 +475,18 @@ defineOptions({
 .text-button {
     letter-spacing: 0.5px;
     font-weight: 500;
+}
+
+.community-code {
+    background-color: rgba(var(--v-theme-primary), 0.05);
+    border-radius: 8px;
+    padding: 16px;
+    font-family: 'Courier New', Courier, monospace;
+    white-space: pre;
+    overflow-x: auto;
+    font-size: 14px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    line-height: 1.5;
 }
 </style>

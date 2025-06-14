@@ -58,7 +58,7 @@ const featureCards = [
                         class="logo-image"
                     />
                 </div>
-                <h2 class="text-h5 text-grey-darken-1 mb-4">AS114514</h2>
+                <h2 class="text-h5 text-grey-darken-1 mb-4">AS207529</h2>
                 <div class="text-subtitle-1 text-medium-emphasis mt-4">
                     Research & Education Network
                 </div>
@@ -74,7 +74,7 @@ const featureCards = [
                     <v-card-title> Network Introduction </v-card-title>
                     <v-card-text class="text-body-1">
                         <p>
-                            LoliNya Network (AS114514) is a research and education network
+                            LoliNya Network (AS207529) is a research and education network
                             focused on IPv6 technology learning and research. Operated by
                             LoliNya Technology Ltd., we are dedicated to exploring the
                             application and development of next-generation Internet
@@ -123,7 +123,7 @@ const featureCards = [
         <v-spacer />
         <v-row justify="center" class="my-6">
             <v-col cols="12" md="10" lg="8">
-                <v-divider class="mb-6"/>
+                <v-divider class="mb-6" />
                 <v-row>
                     <v-col cols="12" md="6">
                         <informationcard />
@@ -146,67 +146,98 @@ const featureCards = [
                         Below is a list of BGP communities supported by our network for
                         routing policy control
                     </v-card-subtitle>
+                    <v-card
+                        class="mt-5 mb-4 px-4 py-2 d-flex align-center"
+                        style="
+                            border-left: 6px solid #f06292;
+                            background: #fff0f6;
+                            margin-left: 12px;
+                            margin-right: 12px;
+                        "
+                        flat
+                    >
+                        <div style="font-family: monospace">
+                            <strong>Actions:</strong><br />
+                            &nbsp;* = 0 &nbsp;&nbsp;do not announce to target<br />
+                            &nbsp;* = 1 &nbsp;&nbsp;prepend 1 to target<br />
+                            &nbsp;* = 2 &nbsp;&nbsp;prepend 2 to target<br />
+                            &nbsp;* = 4 &nbsp;&nbsp;prepend 4 to target<br />
+                            &nbsp;* = 8 &nbsp;&nbsp;prepend 8 to target
+                        </div>
+                    </v-card>
 
-                    <v-table>
+                    <storage class="ml-4">Action target selector:</storage>
+                    <p class="ml-4">* = Action</p>
+                    <v-table class="mb-4">
                         <thead>
                             <tr>
-                                <th>Name</th>
                                 <th>Community Value</th>
                                 <th>Description</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>No Export to Peers</td>
-                                <td class="text-primary font-weight-medium">
-                                    888888:1000
-                                </td>
+                                <td>(207529, 1*00, 0)</td>
+                                <td>Do action to everyone</td>
+                            </tr>
+                            <tr>
+                                <td>(207529, 1*01, asn)</td>
+                                <td>Don't do action to this asn</td>
+                            </tr>
+                            <tr>
+                                <td>(207529, 1*02, asn)</td>
+                                <td>Do action to this asn</td>
+                            </tr>
+                            <tr>
+                                <td>(207529, 1*10, 0)</td>
+                                <td>Do action to every region</td>
+                            </tr>
+                            <tr>
+                                <td>(207529, 1*11, region_code)</td>
+                                <td>Don't do action to this region</td>
+                            </tr>
+                            <tr>
+                                <td>(207529, 1*12, region_code)</td>
+                                <td>Do action to this region</td>
+                            </tr>
+                            <tr>
+                                <td>(207529, 1019, 0)</td>
                                 <td>
-                                    This prefix will not be announced to any peering
-                                    partners
+                                    Disable (asn, 1010, 0), (asn, 1011, local_region) as
+                                    default value
                                 </td>
                             </tr>
                             <tr>
-                                <td>Region: Asia</td>
-                                <td class="text-primary font-weight-medium">
-                                    888888:2001
-                                </td>
-                                <td>Marks routes from the Asia region</td>
+                                <td>(207529, 1*20, 0)</td>
+                                <td>Do action to every country</td>
                             </tr>
                             <tr>
-                                <td>Region: Europe</td>
-                                <td class="text-primary font-weight-medium">
-                                    888888:2002
-                                </td>
-                                <td>Marks routes from the Europe region</td>
+                                <td>(207529, 1*21, country_code)</td>
+                                <td>Don't do action to this country</td>
                             </tr>
                             <tr>
-                                <td>Region: North America</td>
-                                <td class="text-primary font-weight-medium">
-                                    888888:2003
-                                </td>
-                                <td>Marks routes from the North America region</td>
+                                <td>(207529, 1*22, country_code)</td>
+                                <td>Do action to this country</td>
                             </tr>
                             <tr>
-                                <td>Priority: High</td>
-                                <td class="text-primary font-weight-medium">
-                                    888888:3001
-                                </td>
-                                <td>High priority routes</td>
+                                <td>(207529, 1*30, 1)</td>
+                                <td>Do action to upstreams</td>
                             </tr>
                             <tr>
-                                <td>Priority: Medium</td>
-                                <td class="text-primary font-weight-medium">
-                                    888888:3002
-                                </td>
-                                <td>Medium priority routes</td>
+                                <td>(207529, 1*30, 2)</td>
+                                <td>Do action to ixp rs</td>
                             </tr>
                             <tr>
-                                <td>Priority: Low</td>
-                                <td class="text-primary font-weight-medium">
-                                    888888:3003
-                                </td>
-                                <td>Low priority routes</td>
+                                <td>(207529, 1*30, 3)</td>
+                                <td>Do action to peers</td>
+                            </tr>
+                            <tr>
+                                <td>(207529, 1*30, 4)</td>
+                                <td>Do action to downstreams</td>
+                            </tr>
+                            <tr>
+                                <td>(207529, 1*30, 8)</td>
+                                <td>Do action to route collectors</td>
                             </tr>
                         </tbody>
                     </v-table>
@@ -216,10 +247,10 @@ const featureCards = [
                         <v-btn
                             color="primary"
                             variant="text"
-                            prepend-icon="mdi-download"
-                            href="#"
+                            prepend-icon="mdi-tag-outline"
+                            href="/communities"
                         >
-                            Download Complete Community List
+                            View full community list
                         </v-btn>
                     </v-card-actions>
                 </v-card>
@@ -232,16 +263,37 @@ const featureCards = [
                     <v-card-title class="text-h4 text-white">CONTACT US</v-card-title>
                     <v-card-text>
                         <v-row justify="center" class="mt-2">
-                            <v-col cols="12" sm="6" class="d-flex justify-center">
-                                <v-btn variant="tonal" color="white" class="px-4">
+                            <v-col cols="12" sm="4" class="d-flex justify-center">
+                                <v-btn
+                                    variant="tonal"
+                                    color="white"
+                                    class="px-4"
+                                    href="mailto:noc@lolinya.net"
+                                >
                                     <v-icon start>mdi-email</v-icon>
-                                    noc@example.com
+                                    noc@lolinya.net
                                 </v-btn>
                             </v-col>
-                            <v-col cols="12" sm="6" class="d-flex justify-center">
-                                <v-btn variant="tonal" color="white" class="px-4">
+                            <v-col cols="12" sm="4" class="d-flex justify-center">
+                                <v-btn
+                                    variant="tonal"
+                                    color="white"
+                                    class="px-4"
+                                    href="https://t.me/Mxmilu"
+                                >
                                     <v-icon start>mdi-send</v-icon>
-                                    @example
+                                    @Mxmilu
+                                </v-btn>
+                            </v-col>
+                            <v-col cols="12" sm="4" class="d-flex justify-center">
+                                <v-btn
+                                    variant="tonal"
+                                    color="white"
+                                    class="px-4"
+                                    href="https://t.me/alongnya"
+                                >
+                                    <v-icon start>mdi-send</v-icon>
+                                    @alongnya
                                 </v-btn>
                             </v-col>
                         </v-row>
@@ -258,7 +310,7 @@ const featureCards = [
 
         <v-footer class="text-center d-block py-4 rounded-lg">
             <div class="text-subtitle-2 text-medium-emphasis">
-                © {{ new Date().getFullYear() }} LoliNya Network AS114514
+                © {{ new Date().getFullYear() }} LoliNya Network AS207529
             </div>
             <div class="text-caption text-medium-emphasis mt-1">
                 LoliNya Network | Research & Education Network | Operated by LoliNya

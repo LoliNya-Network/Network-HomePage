@@ -51,7 +51,7 @@ defineOptions({
                         >
                         Contact Email
                     </div>
-                    <div class="info-value">peering@example.com</div>
+                    <div class="info-value">noc@lolinya.net</div>
                 </div>
 
                 <div class="info-item">
@@ -79,7 +79,7 @@ defineOptions({
                 </div>
                 <div class="d-flex flex-wrap">
                     <v-chip
-                        v-for="(location, index) in ['Hong Kong', 'Tokyo', 'Los Angeles']"
+                        v-for="(location, index) in ['Hong Kong - vps.town', 'Hong Kong - moedove','Tokyo - Akile', 'San Jose - skywolf']"
                         :key="index"
                         color="primary"
                         variant="outlined"
