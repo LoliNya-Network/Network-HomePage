@@ -4,6 +4,7 @@ import { useTheme } from 'vuetify'
 import peeringcard from './peering.vue'
 import informationcard from './information.vue'
 import featureCard from './featureCard.vue'
+import TipsComponent from '@/components/tips.vue'
 
 defineOptions({
     name: 'HomePage'
@@ -14,6 +15,15 @@ const theme = useTheme()
 // 计算当前应显示的logo
 const currentLogo = computed(() => {
     return theme.global.current.value.dark ? '/logo/logo.svg' : '/logo/logo_dark.svg'
+})
+
+const bgpCardStyle = computed(() => {
+    return {
+        borderLeft: '6px solid #f06292',
+        background: theme.global.current.value.dark ? '#301624' : '#fff0f6',
+        marginLeft: '12px',
+        marginRight: '12px'
+    }
 })
 
 // 定义各种卡片的内容数据
@@ -146,25 +156,15 @@ const featureCards = [
                         Below is a list of BGP communities supported by our network for
                         routing policy control
                     </v-card-subtitle>
-                    <v-card
-                        class="mt-5 mb-4 px-4 py-2 d-flex align-center"
-                        style="
-                            border-left: 6px solid #f06292;
-                            background: #fff0f6;
-                            margin-left: 12px;
-                            margin-right: 12px;
-                        "
-                        flat
-                    >
-                        <div style="font-family: monospace">
-                            <strong>Actions:</strong><br />
-                            &nbsp;* = 0 &nbsp;&nbsp;do not announce to target<br />
-                            &nbsp;* = 1 &nbsp;&nbsp;prepend 1 to target<br />
-                            &nbsp;* = 2 &nbsp;&nbsp;prepend 2 to target<br />
-                            &nbsp;* = 4 &nbsp;&nbsp;prepend 4 to target<br />
-                            &nbsp;* = 8 &nbsp;&nbsp;prepend 8 to target
-                        </div>
-                    </v-card>
+
+                    <TipsComponent class="mt-4 mb-2">
+                        <strong>Actions:</strong><br />
+                        &nbsp;* = 0 &nbsp;&nbsp;do not announce to target<br />
+                        &nbsp;* = 1 &nbsp;&nbsp;prepend 1 to target<br />
+                        &nbsp;* = 2 &nbsp;&nbsp;prepend 2 to target<br />
+                        &nbsp;* = 4 &nbsp;&nbsp;prepend 4 to target<br />
+                        &nbsp;* = 8 &nbsp;&nbsp;prepend 8 to target
+                    </TipsComponent>
 
                     <storage class="ml-4">Action target selector:</storage>
                     <p class="ml-4">* = Action</p>

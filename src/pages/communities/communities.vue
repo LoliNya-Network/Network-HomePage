@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import TipsComponent from '@/components/tips.vue'
+
 defineOptions({
     name: 'CommunitiesPage'
 })
@@ -38,18 +40,12 @@ defineOptions({
                         Internal Community
                     </v-card-title>
                     <v-card-text class="px-4 pt-2">
-                        <v-card
-                            class="mb-4 px-4 py-2 d-flex align-center"
-                            style="border-left: 6px solid #f06292; background: #fff0f6"
-                            flat
-                        >
-                            <div style="font-family: monospace">
-                                &nbsp;(207529, <999, 0)&nbsp;&nbsp;Community for all my
-                                node<br />
-                                &nbsp;(207529, <999, 1)&nbsp;&nbsp;Community only for this
-                                node<br />
-                            </div>
-                        </v-card>
+                        <TipsComponent>
+                            &nbsp;(207529, <999, 0)&nbsp;&nbsp;Community for all my
+                            node<br />
+                            &nbsp;(207529, <999, 1)&nbsp;&nbsp;Community only for this
+                            node<br />
+                        </TipsComponent>
                         <v-table class="community-table">
                             <thead>
                                 <tr>
@@ -148,20 +144,15 @@ defineOptions({
                         Control Community
                     </v-card-title>
                     <v-card-text class="px-4 pt-2">
-                        <v-card
-                            class="mb-4 px-4 py-2 d-flex align-center"
-                            style="border-left: 6px solid #f06292; background: #fff0f6"
-                            flat
-                        >
-                            <div style="font-family: monospace">
-                                <strong>Actions:</strong><br />
-                                &nbsp;* = 0 &nbsp;&nbsp;do not announce to target<br />
-                                &nbsp;* = 1 &nbsp;&nbsp;prepend 1 to target<br />
-                                &nbsp;* = 2 &nbsp;&nbsp;prepend 2 to target<br />
-                                &nbsp;* = 4 &nbsp;&nbsp;prepend 4 to target<br />
-                                &nbsp;* = 8 &nbsp;&nbsp;prepend 8 to target
-                            </div>
-                        </v-card>
+
+                        <TipsComponent>
+                            <strong>Actions:</strong><br />
+                            &nbsp;* = 0 &nbsp;&nbsp;do not announce to target<br />
+                            &nbsp;* = 1 &nbsp;&nbsp;prepend 1 to target<br />
+                            &nbsp;* = 2 &nbsp;&nbsp;prepend 2 to target<br />
+                            &nbsp;* = 4 &nbsp;&nbsp;prepend 4 to target<br />
+                            &nbsp;* = 8 &nbsp;&nbsp;prepend 8 to target
+                        </TipsComponent>
 
                         <div>
                             <h4 class="font-weight-medium mb-2">
