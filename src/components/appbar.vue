@@ -85,7 +85,7 @@ const navLinks = [
     {
         title: 'PeeringDB',
         icon: 'mdi-database',
-        url: 'https://www.peeringdb.com',
+        url: 'https://www.peeringdb.com/net/29458',
         external: true
     },
     { title: 'BGP.Tools', icon: 'mdi-tools', url: 'https://bgp.tools/as/207529', external: true },

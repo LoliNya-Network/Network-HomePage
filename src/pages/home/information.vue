@@ -95,7 +95,7 @@ const ipv6Blocks = ref([
                         >
                         PeeringDB
                     </div>
-                    <div class="info-value">可恶的 PeeringDB 还没有批准我的申请</div>
+                    <div class="info-value">peeringdb.com/net/29458</div>
                 </div>
 
                 <v-divider />
