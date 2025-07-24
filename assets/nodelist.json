@@ -1,0 +1,96 @@
+[
+    {
+        "id": "fra-ifog",
+        "name": "Frankfurt, Germany",
+        "lat": 50.0621,
+        "lng": 8.4840,
+        "type": "secondary",
+        "provider": "iFog GmbH",
+        "connections": [
+            "locix-frankfurt"
+        ]
+    },
+    {
+        "id": "amsterdam-interix",
+        "name": "Amsterdam, Netherlands",
+        "lat": 52.3676,
+        "lng": 4.9041,
+        "type": "secondary",
+        "provider": "INTER-IX",
+        "connections": [
+            "locix-frankfurt"
+        ]
+    },
+    {
+        "id": "london-lycheen",
+        "name": "London, United Kingdom",
+        "lat": 51.5074,
+        "lng": -0.1278,
+        "type": "secondary",
+        "provider": "Lycheen",
+        "connections": [
+            "locix-frankfurt"
+        ]
+    },
+    {
+        "id": "tokyo-akile",
+        "name": "Tokyo, Japan",
+        "lat": 35.6762,
+        "lng": 139.6503,
+        "type": "secondary",
+        "provider": "Akile",
+        "connections": [
+            "hongkong-moedove"
+        ]
+    },
+    {
+        "id": "singapore-lycheen",
+        "name": "Singapore",
+        "lat": 1.3521,
+        "lng": 103.8198,
+        "type": "secondary",
+        "provider": "Lycheen",
+        "connections": [
+            "hongkong-moedove"
+        ]
+    },
+    {
+        "id": "hongkong-vpstown",
+        "name": "Hong Kong",
+        "lat": 22.3140,
+        "lng": 114.1694,
+        "type": "secondary",
+        "provider": "vps.town",
+        "connections": [
+            "hongkong-moedove"
+        ]
+    },
+    {
+        "id": "hongkong-moedove",
+        "name": "Hong Kong",
+        "lat": 22.3193,
+        "lng": 114.1694,
+        "type": "primary",
+        "provider": "MoeDove",
+        "connections": [
+            "locix-frankfurt",
+            "tokyo-akile",
+            "singapore-lycheen",
+            "hongkong-vpstown"
+        ]
+    },
+    {
+        "id": "locix-frankfurt",
+        "name": "Frankfurt, Germany",
+        "lat": 50.1109,
+        "lng": 8.6821,
+        "type": "primary",
+        "provider": "Bling Network",
+        "connections": [
+            "fra-ifog",
+            "amsterdam-interix",
+            "london-lycheen",
+            "hongkong-moedove"
+        ]
+    }
+]

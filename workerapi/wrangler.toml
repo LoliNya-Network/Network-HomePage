@@ -1,0 +1,9 @@
+name = "henet-bgp-api"
+main = "heapi.ts"
+compatibility_date = "2024-01-01"
+
+[env.production]
+name = "henet-bgp-api"
+
+[env.staging]
+name = "henet-bgp-api-staging"

@@ -1,0 +1,26 @@
+{
+  "name": "henet-bgp-api",
+  "version": "1.0.0",
+  "description": "Cloudflare Worker API for HE.NET BGP and WHOIS data",
+  "main": "heapi.ts",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "deploy:staging": "wrangler deploy --env staging",
+    "deploy:production": "wrangler deploy --env production"
+  },
+  "keywords": [
+    "cloudflare-worker",
+    "bgp",
+    "whois",
+    "henet",
+    "api"
+  ],
+  "author": "Network-HomePage",
+  "license": "MIT",
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20231218.0",
+    "wrangler": "^3.0.0",
+    "typescript": "^5.0.0"
+  }
+}

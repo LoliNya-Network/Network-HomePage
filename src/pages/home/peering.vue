@@ -1,8 +1,37 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+
+// 定义节点数据类型
+interface NetworkNode {
+  id: string
+  name: string
+  lat: number
+  lng: number
+  type: 'primary' | 'secondary'
+  provider: string
+  connections: string[]
+}
+
+interface Props {
+  nodes: NetworkNode[]
+  loading?: boolean
+  error?: string | null
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  loading: false,
+  error: null
+})
+
 // Peering组件
 defineOptions({
     name: 'PeeringComponent'
 })
+
+// 格式化位置名称显示
+const formatLocationName = (node: NetworkNode) => {
+  return `${node.name} - ${node.provider}`
+}
 </script>
 
 <template>
@@ -77,17 +106,40 @@ defineOptions({
                     >
                     Exchange Points
                 </div>
-                <div class="d-flex flex-wrap">
-                    <v-chip
-                        v-for="(location, index) in ['Hong Kong - vps.town', 'Hong Kong - moedove','Tokyo - Akile', 'San Jose - skywolf']"
-                        :key="index"
+                <div v-if="loading" class="d-flex align-center">
+                    <v-progress-circular
+                        indeterminate
                         color="primary"
+                        size="20"
+                        class="me-2"
+                    ></v-progress-circular>
+                    <span class="text-caption">Loading exchange points...</span>
+                </div>
+                <div v-else-if="error" class="d-flex align-center">
+                    <v-icon color="error" size="20" class="me-2">mdi-alert-circle</v-icon>
+                    <span class="text-caption text-error">{{ error }}</span>
+                </div>
+                <div v-else class="d-flex flex-wrap">
+                    <v-chip
+                        v-for="node in nodes"
+                        :key="node.id"
+                        :color="node.type === 'primary' ? 'primary' : 'secondary'"
                         variant="outlined"
                         size="small"
                         class="me-2 mb-2"
                     >
                         <v-icon start size="small">mdi-access-point</v-icon>
-                        {{ location }}
+                        {{ formatLocationName(node) }}
+                    </v-chip>
+                    <v-chip
+                        v-if="nodes.length === 0"
+                        color="grey"
+                        variant="outlined"
+                        size="small"
+                        class="me-2 mb-2"
+                    >
+                        <v-icon start size="small">mdi-alert-circle-outline</v-icon>
+                        No exchange points available
                     </v-chip>
                 </div>
             </div>

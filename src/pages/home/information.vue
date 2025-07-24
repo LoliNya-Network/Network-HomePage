@@ -1,16 +1,49 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import { getASPrefixesWithWhois } from '@/hooks/heapi'
 
 defineOptions({
     name: 'InformationComponent'
 })
 
 const showIpv6Blocks = ref(false)
-const ipv6BlockCount = ref(2)
-const ipv6Blocks = ref([
-    { prefix: '2a14:7580:fff5::/48', usage: "Main Services - Hong Kong" },
-    { prefix: '2a14:7581:3000::/40', usage: "Under planning" }
-])
+const ipv6BlockCount = ref(0)
+const ipv6Blocks = ref<Array<{ prefix: string; usage: string }>>([])
+const loading = ref(false)
+const error = ref('')
+
+// 获取IPv6前缀数据
+const fetchIPv6Blocks = async () => {
+    loading.value = true
+    error.value = ''
+    try {
+        const data = await getASPrefixesWithWhois(207529)
+        
+        // 过滤出IPv6前缀并转换格式
+        const ipv6Prefixes = data
+            .filter(item => item.Prefix.includes(':')) // 过滤IPv6地址
+            .map(item => ({
+                prefix: item.Prefix,
+                usage: item.Org || item.countrydata.Iso3166_Name || 'Unknown usage'
+            }))
+        
+        ipv6Blocks.value = ipv6Prefixes
+        ipv6BlockCount.value = ipv6Prefixes.length
+    } catch (err) {
+        console.error('Failed to fetch IPv6 blocks:', err)
+        error.value = 'Failed to load IPv6 blocks'
+        ipv6Blocks.value = []
+        ipv6BlockCount.value = 0
+    } finally {
+        loading.value = false
+    }
+}
+
+// 组件挂载时获取数据
+onMounted(() => {
+    fetchIPv6Blocks()
+})
+
 </script>
 
 <template>
@@ -49,14 +82,39 @@ const ipv6Blocks = ref([
                             aria-label="Toggle IPv6 Address Blocks"
                             class="ms-2"
                         ></v-btn>
+                        <v-btn
+                            variant="text"
+                            density="compact"
+                            icon="mdi-refresh"
+                            @click="fetchIPv6Blocks"
+                            :loading="loading"
+                            aria-label="Refresh IPv6 Blocks"
+                            class="ms-1"
+                        ></v-btn>
                     </div>
-                    <div class="info-value">{{ ipv6BlockCount }} address blocks</div>
+                    <div class="info-value">
+                        <span v-if="loading">Loading...</span>
+                        <span v-else-if="error" class="text-error">{{ error }}</span>
+                        <span v-else>{{ ipv6BlockCount }} address blocks</span>
+                    </div>
                 </div>
 
                 <v-expand-transition>
                     <div v-if="showIpv6Blocks">
                         <v-card variant="tonal">
-                            <v-table density="compact">
+                            <v-progress-linear v-if="loading" indeterminate color="primary"></v-progress-linear>
+                            <div v-if="error" class="pa-4 text-center text-error">
+                                {{ error }}
+                                <v-btn 
+                                    variant="text" 
+                                    color="primary" 
+                                    @click="fetchIPv6Blocks"
+                                    class="ml-2"
+                                >
+                                    Retry
+                                </v-btn>
+                            </div>
+                            <v-table v-else density="compact">
                                 <thead>
                                     <tr>
                                         <th>Address Prefix</th>
@@ -64,6 +122,11 @@ const ipv6Blocks = ref([
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <tr v-if="ipv6Blocks.length === 0 && !loading">
+                                        <td colspan="2" class="text-center text-disabled pa-4">
+                                            No IPv6 blocks found
+                                        </td>
+                                    </tr>
                                     <tr v-for="(block, index) in ipv6Blocks" :key="index">
                                         <td class="text-primary font-weight-medium">
                                             {{ block.prefix }}

@@ -1,10 +1,24 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import { useTheme } from 'vuetify'
 import peeringcard from './peering.vue'
 import informationcard from './information.vue'
 import featureCard from './featureCard.vue'
 import TipsComponent from '@/components/tips.vue'
+import NetworkMap from '@/components/NetworkMap.vue'
+
+import { getASPrefixesWithWhois } from '@/hooks/heapi.ts'
+
+// 定义节点数据类型
+interface NetworkNode {
+  id: string
+  name: string
+  lat: number
+  lng: number
+  type: 'primary' | 'secondary'
+  provider: string
+  connections: string[]
+}
 
 defineOptions({
     name: 'HomePage'
@@ -12,18 +26,41 @@ defineOptions({
 
 const theme = useTheme()
 
+const nodeApiUrl = import.meta.env.VITE_NODE_API_URL
+
+// 节点数据
+const networkNodes = ref<NetworkNode[]>([])
+const loading = ref(true)
+const error = ref<string | null>(null)
+
 // 计算当前应显示的logo
 const currentLogo = computed(() => {
     return theme.global.current.value.dark ? '/logo/logo.svg' : '/logo/logo_dark.svg'
 })
 
-const bgpCardStyle = computed(() => {
-    return {
-        borderLeft: '6px solid #f06292',
-        background: theme.global.current.value.dark ? '#301624' : '#fff0f6',
-        marginLeft: '12px',
-        marginRight: '12px'
+// 获取网络节点数据
+const fetchNetworkNodes = async () => {
+  loading.value = true
+  error.value = null
+  try {
+    const response = await fetch(nodeApiUrl)
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
     }
+    const data = await response.json()
+    networkNodes.value = data
+  } catch (err) {
+    console.error('Failed to fetch network nodes:', err)
+    error.value = err instanceof Error ? err.message : 'Failed to load network data'
+    networkNodes.value = []
+  } finally {
+    loading.value = false
+  }
+}
+
+onMounted(() => {
+  fetchNetworkNodes()
+  console.log(getASPrefixesWithWhois(13335))
 })
 
 // 定义各种卡片的内容数据
@@ -81,7 +118,12 @@ const featureCards = [
         <v-row justify="center" class="my-6">
             <v-col cols="12" md="10" lg="8">
                 <v-card elevation="1" class="pa-4 rounded-lg">
-                    <v-card-title> Network Introduction </v-card-title>
+                    <v-card-title>
+                        <v-icon color="primary" class="mr-2"
+                            >mdi-tag</v-icon
+                        >
+                        Network Introduction
+                    </v-card-title>
                     <v-card-text class="text-body-1">
                         <p>
                             LoliNya Network (AS207529) is a research and education network
@@ -98,11 +140,25 @@ const featureCards = [
                             welcome peering with other education and research networks to
                             promote academic exchange and technological innovation.
                         </p>
+
+                        <div class="mt-6">
+                            <h3 class="text-h6 mb-3">
+                                <v-icon color="primary" class="mr-2"
+                                    >mdi-map-marker-multiple</v-icon
+                                >
+                                Network Nodes
+                            </h3>
+                            <NetworkMap 
+                                :nodes="networkNodes" 
+                                :loading="loading" 
+                                :error="error" 
+                                @retry="fetchNetworkNodes"
+                            />
+                        </div>
                     </v-card-text>
                 </v-card>
             </v-col>
         </v-row>
-
         <v-row justify="center" class="my-6">
             <v-col cols="12" md="10" lg="8" class="mb-2 text-center">
                 <h2 class="text-h4 font-weight-medium primary--text">
@@ -139,7 +195,7 @@ const featureCards = [
                         <informationcard />
                     </v-col>
                     <v-col cols="12" md="6">
-                        <peeringcard />
+                        <peeringcard :nodes="networkNodes" :loading="loading" :error="error" />
                     </v-col>
                 </v-row>
             </v-col>
@@ -166,8 +222,9 @@ const featureCards = [
                         &nbsp;* = 8 &nbsp;&nbsp;prepend 8 to target
                     </TipsComponent>
 
-                    <storage class="ml-4">Action target selector:</storage>
+                    <p class="ml-4">Action target selector:</p>
                     <p class="ml-4">* = Action</p>
+
                     <v-table class="mb-4">
                         <thead>
                             <tr>
@@ -308,15 +365,19 @@ const featureCards = [
             </v-col>
         </v-row>
 
-        <v-footer class="text-center d-block py-4 rounded-lg">
-            <div class="text-subtitle-2 text-medium-emphasis">
-                © {{ new Date().getFullYear() }} LoliNya Network AS207529
-            </div>
-            <div class="text-caption text-medium-emphasis mt-1">
-                LoliNya Network | Research & Education Network | Operated by LoliNya
-                Technology Ltd.
-            </div>
-        </v-footer>
+        <v-row justify="center">
+            <v-col cols="12" md="10" lg="8">
+                <v-footer class="text-center d-block py-4 rounded-lg">
+                    <div class="text-subtitle-2 text-medium-emphasis">
+                        © {{ new Date().getFullYear() }} LoliNya Network AS207529
+                    </div>
+                    <div class="text-caption text-medium-emphasis mt-1">
+                        LoliNya Network | Research & Education Network | Operated by
+                        LoliNya Technology Ltd.
+                    </div>
+                </v-footer>
+            </v-col>
+        </v-row>
     </v-container>
 </template>
 
