@@ -7,8 +7,6 @@ import featureCard from './featureCard.vue'
 import TipsComponent from '@/components/tips.vue'
 import NetworkMap from '@/components/NetworkMap.vue'
 
-import { getASPrefixesWithWhois } from '@/hooks/heapi.ts'
-
 // 定义节点数据类型
 interface NetworkNode {
   id: string
@@ -60,7 +58,6 @@ const fetchNetworkNodes = async () => {
 
 onMounted(() => {
   fetchNetworkNodes()
-  console.log(getASPrefixesWithWhois(13335))
 })
 
 // 定义各种卡片的内容数据

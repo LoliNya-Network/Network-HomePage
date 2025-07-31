@@ -248,9 +248,9 @@ export default {
             'GET /api/as/:asn/whois': 'Get AS prefixes with WHOIS information'
           },
           examples: {
-            'BGP prefixes': 'GET /api/bgp/6393',
+            'BGP prefixes': 'GET /api/bgp/6939',
             'WHOIS data': 'POST /api/whois with body: {"prefixes": ["1.1.1.0/24"]}',
-            'AS with WHOIS': 'GET /api/as/6393/whois'
+            'AS with WHOIS': 'GET /api/as/6939/whois'
           }
         }
         return successResponse(documentation)
