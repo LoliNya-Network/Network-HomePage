@@ -75,10 +75,10 @@ const featureCards = [
             "Focused on IPv6 technology, no IPv4 connectivity provided, actively embracing next-generation internet protocols (definitely not because we're poor)"
     },
     {
-        title: 'Open Peering',
+        title: 'Open Peering / Free Transit',
         icon: 'mdi-vector-link',
         content:
-            'Welcome peering with other research and education networks and academic institutions'
+            'Open peering for all, with free IP transit for research and education.'
     },
     {
         title: 'Professional Operations',
