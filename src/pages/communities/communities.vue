@@ -13,7 +13,7 @@ defineOptions({
         <v-row justify="center" class="mt-12 mb-8">
             <v-col cols="12" md="10" lg="8" class="text-center">
                 <h2 class="text-h3 font-weight-medium primary--text">
-                    <v-icon color="primary" class="mr-3">mdi-star</v-icon>
+                    <v-icon color="primary" class="mr-3">mdi-tag-multiple-outline</v-icon>
                     BGP Communities
                 </h2>
                 <div class="mt-3 text-medium-emphasis">
@@ -400,7 +400,7 @@ defineOptions({
                             color="primary"
                             variant="text"
                             prepend-icon="mdi-download"
-                            href="/assets/communities-list.md"
+                            href="https://geofeed.nyalo.li/communities-list.md"
                         >
                             Download full community list
                         </v-btn>

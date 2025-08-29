@@ -4,18 +4,17 @@ import { useTheme } from 'vuetify'
 import peeringcard from './peering.vue'
 import informationcard from './information.vue'
 import featureCard from './featureCard.vue'
-import TipsComponent from '@/components/tips.vue'
 import NetworkMap from '@/components/NetworkMap.vue'
 
 // 定义节点数据类型
 interface NetworkNode {
-  id: string
-  name: string
-  lat: number
-  lng: number
-  type: 'primary' | 'secondary'
-  provider: string
-  connections: string[]
+    id: string
+    name: string
+    lat: number
+    lng: number
+    type: 'primary' | 'secondary'
+    provider: string
+    connections: string[]
 }
 
 defineOptions({
@@ -38,26 +37,26 @@ const currentLogo = computed(() => {
 
 // 获取网络节点数据
 const fetchNetworkNodes = async () => {
-  loading.value = true
-  error.value = null
-  try {
-    const response = await fetch(nodeApiUrl)
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`)
+    loading.value = true
+    error.value = null
+    try {
+        const response = await fetch(nodeApiUrl)
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`)
+        }
+        const data = await response.json()
+        networkNodes.value = data
+    } catch (err) {
+        console.error('Failed to fetch network nodes:', err)
+        error.value = err instanceof Error ? err.message : 'Failed to load network data'
+        networkNodes.value = []
+    } finally {
+        loading.value = false
     }
-    const data = await response.json()
-    networkNodes.value = data
-  } catch (err) {
-    console.error('Failed to fetch network nodes:', err)
-    error.value = err instanceof Error ? err.message : 'Failed to load network data'
-    networkNodes.value = []
-  } finally {
-    loading.value = false
-  }
 }
 
 onMounted(() => {
-  fetchNetworkNodes()
+    fetchNetworkNodes()
 })
 
 // 定义各种卡片的内容数据
@@ -77,8 +76,7 @@ const featureCards = [
     {
         title: 'Open Peering / Free Transit',
         icon: 'mdi-vector-link',
-        content:
-            'Open peering for all, with free IP transit for research and education.'
+        content: 'Open peering for all, with free IP transit for research and education.'
     },
     {
         title: 'Professional Operations',
@@ -116,9 +114,7 @@ const featureCards = [
             <v-col cols="12" md="10" lg="8">
                 <v-card elevation="1" class="pa-4 rounded-lg">
                     <v-card-title>
-                        <v-icon color="primary" class="mr-2"
-                            >mdi-tag</v-icon
-                        >
+                        <v-icon color="primary" class="mr-2">mdi-tag</v-icon>
                         Network Introduction
                     </v-card-title>
                     <v-card-text class="text-body-1">
@@ -145,10 +141,10 @@ const featureCards = [
                                 >
                                 Network Nodes
                             </h3>
-                            <NetworkMap 
-                                :nodes="networkNodes" 
-                                :loading="loading" 
-                                :error="error" 
+                            <NetworkMap
+                                :nodes="networkNodes"
+                                :loading="loading"
+                                :error="error"
                                 @retry="fetchNetworkNodes"
                             />
                         </div>
@@ -156,6 +152,7 @@ const featureCards = [
                 </v-card>
             </v-col>
         </v-row>
+        
         <v-row justify="center" class="my-6">
             <v-col cols="12" md="10" lg="8" class="mb-2 text-center">
                 <h2 class="text-h4 font-weight-medium primary--text">
@@ -192,7 +189,11 @@ const featureCards = [
                         <informationcard />
                     </v-col>
                     <v-col cols="12" md="6">
-                        <peeringcard :nodes="networkNodes" :loading="loading" :error="error" />
+                        <peeringcard
+                            :nodes="networkNodes"
+                            :loading="loading"
+                            :error="error"
+                        />
                     </v-col>
                 </v-row>
             </v-col>
@@ -200,114 +201,26 @@ const featureCards = [
 
         <v-row justify="center" class="my-6">
             <v-col cols="12" md="10" lg="8">
-                <v-card elevation="1" class="rounded-lg">
-                    <v-card-title class="text-h5 primary--text">
-                        <v-icon color="primary" class="mr-2">mdi-tag-multiple</v-icon>
-                        BGP Communities
-                    </v-card-title>
-                    <v-card-subtitle class="pb-0">
-                        Below is a list of BGP communities supported by our network for
-                        routing policy control
-                    </v-card-subtitle>
-
-                    <TipsComponent class="mt-4 mb-2">
-                        <strong>Actions:</strong><br />
-                        &nbsp;* = 0 &nbsp;&nbsp;do not announce to target<br />
-                        &nbsp;* = 1 &nbsp;&nbsp;prepend 1 to target<br />
-                        &nbsp;* = 2 &nbsp;&nbsp;prepend 2 to target<br />
-                        &nbsp;* = 4 &nbsp;&nbsp;prepend 4 to target<br />
-                        &nbsp;* = 8 &nbsp;&nbsp;prepend 8 to target
-                    </TipsComponent>
-
-                    <p class="ml-4">Action target selector:</p>
-                    <p class="ml-4">* = Action</p>
-
-                    <v-table class="mb-4">
-                        <thead>
-                            <tr>
-                                <th>Community Value</th>
-                                <th>Description</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>(207529, 1*00, 0)</td>
-                                <td>Do action to everyone</td>
-                            </tr>
-                            <tr>
-                                <td>(207529, 1*01, asn)</td>
-                                <td>Don't do action to this asn</td>
-                            </tr>
-                            <tr>
-                                <td>(207529, 1*02, asn)</td>
-                                <td>Do action to this asn</td>
-                            </tr>
-                            <tr>
-                                <td>(207529, 1*10, 0)</td>
-                                <td>Do action to every region</td>
-                            </tr>
-                            <tr>
-                                <td>(207529, 1*11, region_code)</td>
-                                <td>Don't do action to this region</td>
-                            </tr>
-                            <tr>
-                                <td>(207529, 1*12, region_code)</td>
-                                <td>Do action to this region</td>
-                            </tr>
-                            <tr>
-                                <td>(207529, 1019, 0)</td>
-                                <td>
-                                    Disable (asn, 1010, 0), (asn, 1011, local_region) as
-                                    default value
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>(207529, 1*20, 0)</td>
-                                <td>Do action to every country</td>
-                            </tr>
-                            <tr>
-                                <td>(207529, 1*21, country_code)</td>
-                                <td>Don't do action to this country</td>
-                            </tr>
-                            <tr>
-                                <td>(207529, 1*22, country_code)</td>
-                                <td>Do action to this country</td>
-                            </tr>
-                            <tr>
-                                <td>(207529, 1*30, 1)</td>
-                                <td>Do action to upstreams</td>
-                            </tr>
-                            <tr>
-                                <td>(207529, 1*30, 2)</td>
-                                <td>Do action to ixp rs</td>
-                            </tr>
-                            <tr>
-                                <td>(207529, 1*30, 3)</td>
-                                <td>Do action to peers</td>
-                            </tr>
-                            <tr>
-                                <td>(207529, 1*30, 4)</td>
-                                <td>Do action to downstreams</td>
-                            </tr>
-                            <tr>
-                                <td>(207529, 1*30, 8)</td>
-                                <td>Do action to route collectors</td>
-                            </tr>
-                        </tbody>
-                    </v-table>
-
-                    <v-card-actions>
-                        <v-spacer />
-                        <v-btn
-                            color="primary"
-                            variant="text"
-                            prepend-icon="mdi-tag-outline"
-                            href="/communities"
-                        >
-                            View full community list
-                        </v-btn>
-                    </v-card-actions>
-                </v-card>
+                <v-sheet elevation="2" class="pa-8 text-center rounded-lg">
+                    <v-icon color="primary" size="48" class="mb-4"
+                        >mdi-tag-multiple-outline</v-icon
+                    >
+                    <h3 class="text-h4 font-weight-bold mb-2">BGP Communities</h3>
+                    <p class="text-body-1 mb-6">
+                        We support a rich set of BGP communities for flexible routing
+                        policy control.
+                    </p>
+                    <v-btn
+                        color="primary"
+                        variant="tonal"
+                        size="large"
+                        prepend-icon="mdi-arrow-right-circle-outline"
+                        href="/communities"
+                        class="font-weight-bold"
+                    >
+                        View Full List
+                    </v-btn>
+                </v-sheet>
             </v-col>
         </v-row>
 
@@ -316,8 +229,9 @@ const featureCards = [
                 <v-card color="primary" class="text-center py-4 px-2 rounded-lg">
                     <v-card-title class="text-h4 text-white">CONTACT US</v-card-title>
                     <v-card-text>
-                        <v-row justify="center" class="mt-2">
-                            <v-col cols="12" sm="4" class="d-flex justify-center">
+                        <v-row justify="center" class="mt-2 px-10"> </v-row>
+                        <v-row justify="center" class="mt-2 px-10">
+                            <v-col cols="12" sm="3" class="d-flex justify-center">
                                 <v-btn
                                     variant="tonal"
                                     color="white"
@@ -328,7 +242,7 @@ const featureCards = [
                                     noc@lolinya.net
                                 </v-btn>
                             </v-col>
-                            <v-col cols="12" sm="4" class="d-flex justify-center">
+                            <v-col cols="12" sm="3" class="d-flex justify-center">
                                 <v-btn
                                     variant="tonal"
                                     color="white"
@@ -339,7 +253,18 @@ const featureCards = [
                                     @Mxmilu
                                 </v-btn>
                             </v-col>
-                            <v-col cols="12" sm="4" class="d-flex justify-center">
+                            <v-col cols="12" sm="3" class="d-flex justify-center">
+                                <v-btn
+                                    variant="tonal"
+                                    color="white"
+                                    class="px-4"
+                                    href="https://t.me/Ximi1145"
+                                >
+                                    <v-icon start>mdi-send</v-icon>
+                                    @Ximineko
+                                </v-btn>
+                            </v-col>
+                            <v-col cols="12" sm="3" class="d-flex justify-center">
                                 <v-btn
                                     variant="tonal"
                                     color="white"
