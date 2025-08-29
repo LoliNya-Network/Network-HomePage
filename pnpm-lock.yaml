@@ -23,6 +23,9 @@ importers:
       sass:
         specifier: ^1.87.0
         version: 1.87.0
+      vite-plugin-sitemap:
+        specifier: ^0.8.2
+        version: 0.8.2
       vite-plugin-vuetify:
         specifier: ^2.1.1
         version: 2.1.1(vite@6.3.4(@types/node@22.15.3)(jiti@2.4.2)(sass@1.87.0))(vue@3.5.13(typescript@5.8.3))(vuetify@3.8.3)
@@ -1920,6 +1923,9 @@ packages:
     peerDependenciesMeta:
       '@nuxt/kit':
         optional: true
+
+  vite-plugin-sitemap@0.8.2:
+    resolution: {integrity: sha512-bqIw6NVOXg6je81lzX8Lm0vjf8/QSAp8di8fYQzZ3ZdVicOm8+6idBGALJiy1R1FiXNIK8rgORO6HBqXyHW+iQ==}
 
   vite-plugin-vue-devtools@7.7.6:
     resolution: {integrity: sha512-L7nPVM5a7lgit/Z+36iwoqHOaP3wxqVi1UvaDJwGCfblS9Y6vNqf32ILlzJVH9c47aHu90BhDXeZc+rgzHRHcw==}
@@ -3909,6 +3915,8 @@ snapshots:
     transitivePeerDependencies:
       - rollup
       - supports-color
+
+  vite-plugin-sitemap@0.8.2: {}
 
   vite-plugin-vue-devtools@7.7.6(rollup@4.40.1)(vite@6.3.4(@types/node@22.15.3)(jiti@2.4.2)(sass@1.87.0))(vue@3.5.13(typescript@5.8.3)):
     dependencies:

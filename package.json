@@ -17,6 +17,7 @@
     "axios": "^1.11.0",
     "leaflet": "^1.9.4",
     "sass": "^1.87.0",
+    "vite-plugin-sitemap": "^0.8.2",
     "vite-plugin-vuetify": "^2.1.1",
     "vue": "^3.5.13",
     "vue-leaflet": "^0.1.0",
